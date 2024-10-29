@@ -1,24 +1,23 @@
 new Vue({
   el: '#app',
   data: {
-      step: 'inicio',
-      cartas: [
-        { id: 1, left: 0, bottom: 100 }
-      ],
-      isMobile: window.innerWidth < 768
+    step: 'inicio',
+    cartas: [],
+    isMobile: window.innerWidth < 768,
+    categoria: ''
   },
-  mounted() {
-    if(this.isMobile) {
-      this.criarCartasMobile(78);
-    } else {
-      this.criarCartas(78);
-    }
-
+  created() {
     //this.embaralharCartas();
   },
   methods: {
       iniciar() {
         this.step = 'jogo';
+        console.log(this.categoria)
+        if(this.isMobile) {
+          this.criarCartasMobile(78);
+        } else {
+          this.criarCartas(78);
+        }
         
       },
       criarCartas(numCartas) {
@@ -62,6 +61,11 @@ new Vue({
         }
 
         this.cartas = cartas;
+      },
+      reiniciar() {
+        this.step = 'inicio';
+        this.categoria = '';
+        this.cartas = [];
       },
       embaralharCartas() {
         // Escolhe duas cartas aleatórias

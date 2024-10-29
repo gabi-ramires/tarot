@@ -4,12 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarot</title>
+    <link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <div v-if="step == 'inicio'" class="btn">
-            <button @click="iniciar()" class="btn-verde">Jogar cartas</button>        
+        <div v-if="step == 'inicio'" class="inicio">
+            <h3>Vamos começar! 🔮</h3>
+            <p>Escolha uma categoria: </p>
+            <button 
+                @click="categoria = 'familia'" 
+                :class="['btn-opcao', { 'btn-opcao-active': categoria === 'familia' }]">
+                Família
+            </button>
+            <button 
+                @click="categoria = 'trabalho'" 
+                :class="['btn-opcao', { 'btn-opcao-active': categoria === 'trabalho' }]">
+                Trabalho
+            </button>
+            <button 
+                @click="categoria = 'amor'" 
+                :class="['btn-opcao', { 'btn-opcao-active': categoria === 'amor' }]">
+                Amor
+            </button>
+
+            <br>
+            <button 
+                :disabled="categoria === ''" 
+                :class="[{ 'btn-disabled': categoria === '' }, { 'btn-verde': categoria !== '' }]" 
+                @click="iniciar()">
+                Jogar cartas
+            </button>
         </div>
 
         <div v-if="step == 'jogo'" class="cartas">
@@ -21,6 +46,8 @@
             >
             Carta {{ carta.id }}
             </div>
+
+            <button @click="reiniciar()" class="btn-reiniciar">Reiniciar </button> 
         </div>
 
     </div>
