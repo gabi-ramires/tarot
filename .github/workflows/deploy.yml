@@ -21,6 +21,9 @@ jobs:
     - name: List files in current directory
       run: ls -la
 
+    - name: Show FTP environment variables
+      run: echo "Server ${{ secrets.FTP_SERVER }}; Username ${{ secrets.FTP_USERNAME }}"
+
     - name: Deploy to FTP
       uses: SamKirkland/FTP-Deploy-Action@4.2.0
       with:
