@@ -27,5 +27,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/  # Diretório local a ser enviado
+        local-dir: ./  # Diretório local a ser enviado
         server-dir: ./htdocs/  # Diretório remoto no servidor FTP 
