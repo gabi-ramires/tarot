@@ -72,9 +72,10 @@ body {
  .cartas{
     width: 100%;
     height: auto;
+
  }
 
  .carta {
-    width: 110px;
+    width: 100px;
  }
 }
