@@ -21,7 +21,9 @@ new Vue({
         
       },
       criarCartas(numCartas) {
-        // Cria as cartas dinamicamente
+        // Primeiro, busque as cartas do servidor
+        this.buscarCartasServidor(); 
+
         const numBaralhos = 6; // Número de baralhos
         const cartasPorBaralho = Math.ceil(numCartas / numBaralhos); // Quantidade de cartas por baralho
         const cartas = [];
@@ -36,10 +38,19 @@ new Vue({
             const left = baralhoIndex * offsetX; // Posição horizontal
             const bottom = 200 - (posInBaralho * offsetY); // Posição vertical
 
-            cartas.push({ id: i, left: left, bottom: bottom });
+            // Verifica se há uma carta correspondente no servidor
+            const cartaServidor = this.cartasServidores[i - 1]; // Acessa o índice correspondente
+            cartas.push({ 
+                id: i, 
+                left: left, 
+                bottom: bottom, 
+                idReal: cartaServidor ? cartaServidor.idReal : null, // Adiciona idReal se existir
+                msg: cartaServidor ? cartaServidor.msg : '' // Adiciona msg se existir, senão vazio
+            });
         }
 
         this.cartas = cartas;
+        console.log(this.cartas)
       },
       criarCartasMobile(numCartas) {
         // Cria as cartas dinamicamente
@@ -66,6 +77,13 @@ new Vue({
         this.step = 'inicio';
         this.categoria = '';
         this.cartas = [];
+      },
+      buscarCartasServidor() {
+
+        this.cartasServidores = [
+          {idReal: 1, msg: 'Você irá ganhar muito dinheiro.'},
+          {idReal: 2, msg: 'A pessoa que você gosta não está interessada em você.'} 
+        ]
       },
       embaralharCartas() {
         // Escolhe duas cartas aleatórias

@@ -39,12 +39,12 @@
 
         <div v-if="step == 'jogo'" class="cartas">
             <div
-            v-for="(carta) in cartas"
-            :key="carta.id"
-            class="carta"
-            :style="{ left: carta.left + 'px' , bottom: carta.bottom + 'px'}"
-            >
-            Carta {{ carta.id }}
+                v-for="(carta) in cartas"
+                :key="carta.id"
+                class="carta"
+                :style="{ left: carta.left + 'px' , bottom: carta.bottom + 'px'}"
+                >
+                Carta {{ carta.id }}
             </div>
 
             <button @click="reiniciar()" class="btn-reiniciar">Reiniciar </button> 
