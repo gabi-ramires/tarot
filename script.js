@@ -151,7 +151,7 @@ new Vue({
     },
     getCartaImage(id) {
       const carta = this.cartasOriginais.find(c => c.id === id);
-      return carta ? "cartas/"+carta.img : ''; // Retorna a imagem ou uma string vazia
+      return carta ? "cartas/"+carta.img : '';
     },
 
   }
