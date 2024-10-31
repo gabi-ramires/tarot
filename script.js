@@ -1,22 +1,21 @@
 new Vue({
   el: '#app',
   data: {
-    step: 'inicio',
     cartas: [],
     isMobile: window.innerWidth < 768,
-    categoria: ''
+    categoria: '',
+    selectedCarta: null
   },
   created() {
-    //this.embaralharCartas();
+    this.iniciar();
   },
   methods: {
     iniciar() {
-      this.step = 'jogo';
       console.log(this.categoria)
       if(this.isMobile) {
         this.criarCartasMobile(78);
       } else {
-        this.criarCartas(78);
+        this.criarCartas(2);
         this.buscarCartasServidor();
         console.log(this.cartas)
       }
@@ -24,10 +23,10 @@ new Vue({
     },
     criarCartas(numCartas) {
       // Cria as cartas dinamicamente
-      const numBaralhos = 6; // Número de baralhos
+      const numBaralhos = 1; // Número de baralhos
       const cartasPorBaralho = Math.ceil(numCartas / numBaralhos); // Quantidade de cartas por baralho
       const cartas = [];
-      const offsetX = 200; // Distância entre colunas
+      const offsetX = -20; // Distância entre colunas
       const offsetY = 20; // Distância entre linhas
 
       for (let i = 1; i <= numCartas; i++) {
@@ -35,14 +34,14 @@ new Vue({
           const posInBaralho = (i - 1) % cartasPorBaralho; // Posição dentro do baralho
 
           // Calcula as posições
-          const left = baralhoIndex * offsetX; // Posição horizontal
-          const bottom = 200 - (posInBaralho * offsetY); // Posição vertical
+          const bottom = baralhoIndex * offsetX; // Posição horizontal
+          const left = 200 + (posInBaralho * offsetY); // Posição vertical
 
-          cartas.push({ id: i, left: left, bottom: bottom, msg: ''});
+          cartas.push({ id: i, left: left, bottom: bottom, msg: '', img: '', idReal: '', titulo: ''});
       }
 
       this.cartas = cartas;
-      //console.log(this.cartas)
+
     },
     criarCartasMobile(numCartas) {
       // Cria as cartas dinamicamente
@@ -66,108 +65,54 @@ new Vue({
       this.cartas = cartas;
     },
     reiniciar() {
-      this.step = 'inicio';
       this.categoria = '';
       this.cartas = [];
     },
     buscarCartasServidor() {
 
-      const frases = [
-        "Você irá ganhar muito dinheiro.",
-        "A pessoa que você gosta não está interessada em você.",
-        "Você terá uma grande oportunidade!",
-        "Tudo vai dar certo!",
-        "Uma surpresa inesperada está a caminho!",
-        "Você encontrará a felicidade em breve.",
-        "Um novo começo está próximo.",
-        "O amor está no ar.",
-        "Grandes mudanças estão chegando.",
-        "Acredite em si mesmo sempre.",
-        "As estrelas estão a seu favor.",
-        "Uma jornada emocionante espera por você.",
-        "Prepare-se para uma nova aventura.",
-        "Seu trabalho árduo será recompensado.",
-        "Você é mais forte do que imagina.",
-        "Mantenha a fé, coisas boas virão.",
-        "Alguém especial está prestes a entrar na sua vida.",
-        "Você vai realizar um sonho antigo.",
-        "Um convite inesperado pode mudar tudo.",
-        "Seus esforços serão reconhecidos em breve.",
-        "Você merece toda a felicidade do mundo.",
-        "Um amigo leal estará ao seu lado.",
-        "Uma mensagem importante está a caminho.",
-        "A mudança trará novas oportunidades.",
-        "Sua criatividade será sua melhor aliada.",
-        "Você encontrará inspiração onde menos espera.",
-        "O sucesso está mais próximo do que parece.",
-        "Uma pausa pode trazer novas ideias.",
-        "Novas amizades surgirão em breve.",
-        "Você será a razão do sorriso de alguém.",
-        "A gratidão atrai mais coisas boas.",
-        "Este é o momento de arriscar.",
-        "A vida está prestes a surpreendê-lo.",
-        "Você receberá boas notícias em breve.",
-        "Um projeto criativo lhe trará satisfação.",
-        "Você é capaz de superar qualquer desafio.",
-        "Uma viagem inesperada pode ocorrer.",
-        "Seus planos estão prestes a dar certo.",
-        "As mudanças são o começo de algo bom.",
-        "Você terá um encontro memorável.",
-        "Uma nova paixão pode surgir.",
-        "Sua força interior brilhará mais do que nunca.",
-        "Um sonho que você achava perdido voltará à tona.",
-        "Você encontrará o equilíbrio que procura.",
-        "A paciência trará frutos doces.",
-        "A sua voz será ouvida.",
-        "A vida lhe oferecerá novas perspectivas.",
-        "Uma decisão corajosa será recompensada.",
-        "Seu sorriso é a chave para novas conexões.",
-        "Você inspirará aqueles ao seu redor.",
-        "Alguém próximo precisa da sua ajuda.",
-        "Um desafio se transformará em uma oportunidade.",
-        "O amor próprio abrirá portas.",
-        "A sua determinação é admirável.",
-        "O universo conspira a seu favor.",
-        "Um momento especial está prestes a acontecer.",
-        "Sua intuição guiará seus passos.",
-        "Você encontrará respostas que busca.",
-        "O seu passado não define seu futuro.",
-        "Uma lição importante será aprendida.",
-        "Uma nova habilidade pode ser adquirida.",
-        "Você fará uma escolha que mudará sua vida.",
-        "Uma alegria inesperada surgirá em sua vida.",
-        "Você será reconhecido por sua generosidade.",
-        "Uma fase difícil está chegando ao fim.",
-        "Você está no caminho certo.",
-        "Sua resiliência será testada, mas você triunfará.",
-        "Você encontrará beleza nas pequenas coisas.",
-        "Um dia de descanso é bem-vindo.",
-        "Um amigo distante pode se reaproximar.",
-        "Você inspirará confiança em quem está ao seu redor.",
-        "Suas ideias criativas serão valorizadas.",
-        "Um antigo projeto pode ser revitalizado.",
-        "Você terá uma visão clara de suas metas.",
-        "A simplicidade trará alegria.",
-        "Alguém estará orgulhoso de você.",
-        "A vida é feita de momentos, aproveite cada um.",
-        "Você é um farol de esperança para muitos."
-      ];
-    
-      // Verifica se há frases suficientes
-      if (frases.length < 78) {
-        console.error('Você precisa de pelo menos 78 frases adicionais.');
-        return;
-      }
+      fetch("tarot.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            acao: 'buscaCartas'
+          })
+      })
+      .then(response => {
+          if (!response.ok) {
+            throw new Error("Erro na requisição");
+          }
+          return response.json();
+      })
+      .then(data => {
+          if(data.status) {
+            console.log(data)
+            let cartas = data.data;
 
-      // Embaralhar as frases
-      const frasesEmbaralhadas = this.embaralharFrases(frases.slice());
+            // Embaralhar as frases
+            const cartasEmbaralhadas = this.embaralharArray(cartas.slice());
 
-      // Atribui as frases às cartas existentes
-      for (let i = 0; i < this.cartas.length; i++) {
-        if (i < frasesEmbaralhadas.length) {
-            this.cartas[i].msg += frasesEmbaralhadas[i];
-        }
-      }
+            // Atribui as cartas às cartas existentes
+            for (let i = 0; i < this.cartas.length; i++) {
+              if (i < cartasEmbaralhadas.length) {
+                this.cartas[i].idReal += cartasEmbaralhadas[i].idReal;
+                this.cartas[i].titulo += cartasEmbaralhadas[i].titulo;
+                this.cartas[i].img += cartasEmbaralhadas[i].img;
+                this.cartas[i].msg += cartasEmbaralhadas[i].msg;
+              }
+            }
+
+            console.log(this.cartas)
+
+          } else {
+            console.group("erro")
+          }
+          
+      })
+      .catch(error => {
+          alert("Erro ao processar a requisição. Por favor, tente novamente.");
+      });
 
     },
     embaralharCartas() {
@@ -175,7 +120,7 @@ new Vue({
       const idx1 = Math.floor(Math.random() * this.cartas.length);
       let idx2 = Math.floor(Math.random() * this.cartas.length);
       while (idx2 === idx1) {
-          idx2 = Math.floor(Math.random() * this.cartas.length);
+        idx2 = Math.floor(Math.random() * this.cartas.length);
       }
 
       // Armazena as posições `left` das duas cartas
@@ -183,13 +128,31 @@ new Vue({
       this.$set(this.cartas, idx1, { ...this.cartas[idx1], left: this.cartas[idx2].left });
       this.$set(this.cartas, idx2, { ...this.cartas[idx2], left: temp });
     },
-    embaralharFrases(array) {
+    embaralharArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1)); // Gera um índice aleatório
         // Troca os elementos
         [array[i], array[j]] = [array[j], array[i]];
       }
       return array;
-    }
+    },
+    virarCarta(id) {
+      console.log(id)
+      this.selectedCarta = id;
+
+      // Remove a carta o baralho
+      let div = document.getElementById(id)
+      if (div) {
+        div.remove();
+      }
+    },
+    closeModal() {
+      this.selectedCarta = null; // Fecha o modal
+    },
+    getCartaImage(id) {
+      const carta = this.cartas.find(c => c.id === id);
+      return carta ? "cartas/"+carta.img : ''; // Retorna a imagem ou uma string vazia
+    },
+
   }
 });

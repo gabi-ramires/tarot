@@ -25,7 +25,16 @@ body {
     gap: 10px
 }
 
+h3 {
+    text-align: center;
+}
+
 /* ================== Botões ================== */
+.botoes-categorias {
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+}
 .btn {
     margin-bottom: 20px;
 }
@@ -55,6 +64,12 @@ body {
 }
 
 .btn-opcao-active {
+    background-color: #143978;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size:medium;
     border: 2px solid blue;
     box-shadow: 0 0 5px rgba(0, 0, 255, 0.6);
     transform: scale(1.05);
@@ -97,19 +112,19 @@ body {
 }
 
 .carta {
-    width: 140px;
-    height: 200px;
+    width: 150px;
+    height: 271px;
     background-image: url('carta-verso.png');
-    background-size: contain; /* Ajusta a imagem para caber inteira */
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
-    position: absolute; /* Permite a movimentação da carta */
-    transition: transform 0.3s ease; /* Transição suave com duração de 0.3s */
+    position: absolute;
+    transition: transform 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    transform: translate(-50%, 0); /* Centraliza horizontalmente */
+    transform: translate(-50%, 0);
 }
 
 /* Classe para subir a carta ao passar o mouse */
@@ -129,4 +144,36 @@ body {
     width: 100px;
     height: 120px;
  }
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-img {
+    max-width: 90%; /* Limite a largura da imagem */
+    max-height: 90%; /* Limite a altura da imagem */
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Tempo da transição */
+}
+
+.zoom-enter {
+    transform: scale(0.7); /* Escala inicial */
+    opacity: 0; /* Opacidade inicial */
+}
+
+.zoom-leave-to {
+    transform: scale(0.7); /* Escala final */
+    opacity: 0; /* Opacidade final */
 }
