@@ -34,16 +34,18 @@
         </div>
 
         <div class="cartas">
-            <div
-                v-for="(carta) in cartas"
-                :id="carta.id"
-                :key="carta.id"
-                class="carta"
-                @click="virarCarta(carta.id)"
-                :style="{ left: carta.left + 'px' , bottom: carta.bottom + 'px'}"
-                >
-                Carta {{ carta.id }}
-            </div>
+            <transition-group name="fade" mode="out-in">
+                <div
+                    v-for="(carta) in cartas"
+                    :id="carta.id"
+                    :key="carta.id"
+                    class="carta"
+                    @click="virarCarta(carta.id)"
+                    :style="{ left: carta.left + 'px' , bottom: carta.bottom + 'px'}"
+                    >
+                    Carta {{ carta.id }}
+                </div>
+            </transition-group>
 
             <!-- Modal para exibir a imagem da carta -->
             <transition name="zoom">

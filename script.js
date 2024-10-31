@@ -6,7 +6,7 @@ new Vue({
     categoria: '',
     selectedCarta: null
   },
-  created() {
+  mounted() {
     this.iniciar();
   },
   methods: {
@@ -15,7 +15,7 @@ new Vue({
       if(this.isMobile) {
         this.criarCartasMobile(78);
       } else {
-        this.criarCartas(2);
+        this.criarCartas(3);
         this.buscarCartasServidor();
         console.log(this.cartas)
       }
@@ -67,6 +67,10 @@ new Vue({
     reiniciar() {
       this.categoria = '';
       this.cartas = [];
+      this.selectedCarta = null;
+      this.iniciar()
+
+      console.log(this.carta)
     },
     buscarCartasServidor() {
 
@@ -87,7 +91,6 @@ new Vue({
       })
       .then(data => {
           if(data.status) {
-            console.log(data)
             let cartas = data.data;
 
             // Embaralhar as frases
@@ -103,7 +106,7 @@ new Vue({
               }
             }
 
-            console.log(this.cartas)
+            this.cartasOriginais = this.cartas
 
           } else {
             console.group("erro")
@@ -141,16 +144,13 @@ new Vue({
       this.selectedCarta = id;
 
       // Remove a carta o baralho
-      let div = document.getElementById(id)
-      if (div) {
-        div.remove();
-      }
+      this.cartas = this.cartas.filter(carta => carta.id !== id);
     },
     closeModal() {
       this.selectedCarta = null; // Fecha o modal
     },
     getCartaImage(id) {
-      const carta = this.cartas.find(c => c.id === id);
+      const carta = this.cartasOriginais.find(c => c.id === id);
       return carta ? "cartas/"+carta.img : ''; // Retorna a imagem ou uma string vazia
     },
 

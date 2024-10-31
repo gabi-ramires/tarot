@@ -43,7 +43,8 @@ class Tarot{
             'status' => true,
             'data' => [
                 ['idReal' => 1, 'titulo' => 'O louco', 'img' => 'o-louco.jpg', 'msg' => 'mensagem do louco'],
-                ['idReal' => 2, 'titulo' => 'O mago', 'img' => 'o-mago.jpg', 'msg' => 'mensagem do mago']
+                ['idReal' => 2, 'titulo' => 'O mago', 'img' => 'o-mago.jpg', 'msg' => 'mensagem do mago'],
+                ['idReal' => 3, 'titulo' => 'A Sacerdotisa', 'img' => 'a-sacerdotisa.jpg', 'msg' => 'mensagem da sacedotisa'],
             ]
         ];   
 
