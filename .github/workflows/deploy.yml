@@ -31,4 +31,4 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./  # Diretório local a ser enviado
-        server-dir: ./htdocs/  # Diretório remoto no servidor FTP 
+        server-dir: ./tarot.free.nf/htdocs/  # Diretório remoto no servidor FTP 
