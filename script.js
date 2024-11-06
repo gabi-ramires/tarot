@@ -48,7 +48,7 @@ new Vue({
       const cartasPorBaralho = Math.ceil(numCartas / numBaralhos); // Quantidade de cartas por baralho
       const cartas = [];
       const offsetX = -150; // Distância entre colunas
-      const offsetY = 25; // Distância entre linhas
+      const offsetY = 27; // Distância entre linhas
 
       for (let i = 1; i <= numCartas; i++) {
           const baralhoIndex = Math.floor((i - 1) / cartasPorBaralho); // Índice do baralho
@@ -56,7 +56,7 @@ new Vue({
 
           // Calcula as posições
           const bottom = 260 + (baralhoIndex * offsetX); // Posição horizontal
-          const left = 60 + (posInBaralho * offsetY); // Posição vertical
+          const left = 50 + (posInBaralho * offsetY); // Posição vertical
 
           cartas.push({ id: i, left: left, bottom: bottom, msg: '', img: '', idReal: '', titulo: ''});
       }
