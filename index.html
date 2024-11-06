@@ -11,23 +11,28 @@
     <div id="app">
         <div class="inicio">
             <h3>Vamos começar! 🔮</h3>
-            <p style="text-align: center; color: green">Escolha uma categoria:</p>
+            <p style="text-align: center;">Escolha uma categoria:</p>
             <div class='botoes-categorias'>
                 <button 
-                    @click="categoria = 'familia'" 
+                    id="familia"
+                    @click="escolherCategoria('familia')" 
                     :class="['btn-opcao', { 'btn-opcao-active': categoria === 'familia' }]">
                     Família
                 </button>
                 <button 
-                    @click="categoria = 'trabalho'" 
+                id="trabalho"
+                    @click="escolherCategoria('trabalho')" 
                     :class="['btn-opcao', { 'btn-opcao-active': categoria === 'trabalho' }]">
                     Trabalho
                 </button>
                 <button 
-                    @click="categoria = 'amor'" 
+                id="amor"
+                    @click="escolherCategoria('amor')" 
                     :class="['btn-opcao', { 'btn-opcao-active': categoria === 'amor' }]">
                     Amor
                 </button>
+
+                <button id='reiniciar' @click="reiniciar()" class="btn-reiniciar">Reiniciar</button> 
             </div>
             <p style="text-align: center;">Retire 3 cartas:</p>
             <br>
@@ -50,11 +55,25 @@
             <!-- Modal para exibir a imagem da carta -->
             <transition name="zoom">
                 <div v-if="selectedCarta" class="modal" @click="closeModal()">
-                    <img :src="getCartaImage(selectedCarta)" alt="Carta" class="modal-img" />
+                    <div class="modal-content">
+                        <div class="img-carta">
+                            <img :src="getCartaImage(selectedCarta)" alt="Carta" class="modal-img" />
+                        </div>
+    
+                        <div class="descricao">
+                            <div class="titulo">
+                                <h3>{{ cartaSelecionadaDados.titulo }}</h3>
+                            </div>
+    
+                            <div class="texto">
+                                <span>{{ cartaSelecionadaDados.msg }}</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </transition>
 
-            <button @click="reiniciar()" class="btn-reiniciar">Reiniciar </button> 
         </div>
 
     </div>

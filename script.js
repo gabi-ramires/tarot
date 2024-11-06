@@ -4,7 +4,8 @@ new Vue({
     cartas: [],
     isMobile: window.innerWidth < 768,
     categoria: '',
-    selectedCarta: null
+    selectedCarta: null,
+    cartaSelecionadaDados: null
   },
   mounted() {
     this.iniciar();
@@ -67,7 +68,9 @@ new Vue({
       this.categoria = '';
       this.cartas = [];
       this.selectedCarta = null;
-      this.iniciar()
+      this.cartaSelecionadaDados = null;
+      this.iniciar();
+      this.escolherCategoria(false, true);
 
       console.log(this.carta)
     },
@@ -140,7 +143,16 @@ new Vue({
     },
     virarCarta(id) {
       console.log(id)
+      console.log(this.categoria)
+
+      if(this.categoria == ''){
+        alert("Escolha uma categoria.")
+        return;
+      }
       this.selectedCarta = id;
+      let cartaSelecionadaDados = this.cartas.filter(carta => carta.id == id);
+      this.cartaSelecionadaDados = cartaSelecionadaDados[0]
+      console.log(this.cartaSelecionadaDados)
 
       // Remove a carta o baralho
       this.cartas = this.cartas.filter(carta => carta.id !== id);
@@ -152,6 +164,31 @@ new Vue({
       const carta = this.cartasOriginais.find(c => c.id === id);
       return carta ? "cartas/"+carta.img : '';
     },
+    escolherCategoria(categoria = false, reset = false) {
+      this.categoria = categoria;
+      let categorias = ['familia','trabalho','amor'];
+
+      if(categoria) {
+        categorias.forEach(cat => {
+          if(cat != categoria) {
+            document.getElementById(cat).style.display = 'none';
+          }
+        });
+        
+        document.getElementById('reiniciar').style.display = 'block';
+      }
+
+      if(reset) {
+        categorias.forEach(cat => {
+          document.getElementById(cat).style.display = 'block';
+        });
+
+        document.getElementById('reiniciar').style.display = 'none';
+      }
+      
+ 
+    }
+
 
   }
 });
