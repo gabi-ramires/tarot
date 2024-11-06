@@ -10,15 +10,16 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#app {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
+@media (min-width: 768px) {
+    #app {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+    }
 }
-
 .inicio {
     display: flex;
     flex-direction: column;
@@ -34,6 +35,7 @@ h3 {
     justify-content: center;
     display: flex;
     gap: 20px;
+    margin-bottom: 10px;
 }
 .btn {
     margin-bottom: 20px;
@@ -101,18 +103,51 @@ h3 {
 
 
 /* ================== Cartas ================== */
-.cartas {
-    position: relative; /* Permite que as cartas usem position: absolute */
-    height: 350px;
-    width: 940px;
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: flex-end; /* Alinha as cartas na parte inferior */
+@media (min-width: 768px) {
+    .cartas {
+        position: relative; /* Permite que as cartas usem position: absolute */
+        height: 250px;
+        width: 940px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .carta {
+        width: 150px;
+        height: 271px;
+        background-image: url('carta-verso.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        transform: translate(-50%, 0);
+    }
 }
 
-.carta {
-    width: 150px;
-    height: 271px;
+/* Classe para subir a carta ao passar o mouse */
+.carta:hover {
+    cursor: pointer;
+    transform: translate(-50%, -30px);
+}
+
+@media (max-width: 768px) {
+ .cartas{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .carta {
+    width: 100px;
+    height: 120px;
     background-image: url('carta-verso.png');
     background-size: contain;
     background-position: center;
@@ -124,25 +159,15 @@ h3 {
     justify-content: center;
     font-weight: bold;
     transform: translate(-50%, 0);
-}
+ }
 
-/* Classe para subir a carta ao passar o mouse */
-.carta:hover {
-    cursor: pointer;
-    transform: translate(-50%, -30px); /* Move a carta 30 pixels para cima e centraliza */
-}
-
-@media (max-width: 768px) {
- .cartas{
+ #app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     width: 100%;
-    height: auto;
-
  }
 
- .carta {
-    width: 100px;
-    height: 120px;
- }
 }
 
 .modal {

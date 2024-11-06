@@ -13,12 +13,11 @@ new Vue({
     iniciar() {
       console.log(this.categoria)
       if(this.isMobile) {
-        this.criarCartasMobile(78);
+        this.criarCartasMobile(22);
       } else {
-        this.criarCartas(3);
-        this.buscarCartasServidor();
-        console.log(this.cartas)
+        this.criarCartas(22);
       }
+      this.buscarCartasServidor();
       
     },
     criarCartas(numCartas) {
@@ -27,7 +26,7 @@ new Vue({
       const cartasPorBaralho = Math.ceil(numCartas / numBaralhos); // Quantidade de cartas por baralho
       const cartas = [];
       const offsetX = -20; // Distância entre colunas
-      const offsetY = 20; // Distância entre linhas
+      const offsetY = 45; // Distância entre linhas
 
       for (let i = 1; i <= numCartas; i++) {
           const baralhoIndex = Math.floor((i - 1) / cartasPorBaralho); // Índice do baralho
@@ -35,7 +34,7 @@ new Vue({
 
           // Calcula as posições
           const bottom = baralhoIndex * offsetX; // Posição horizontal
-          const left = 200 + (posInBaralho * offsetY); // Posição vertical
+          const left = 0 + (posInBaralho * offsetY); // Posição vertical
 
           cartas.push({ id: i, left: left, bottom: bottom, msg: '', img: '', idReal: '', titulo: ''});
       }
@@ -45,21 +44,21 @@ new Vue({
     },
     criarCartasMobile(numCartas) {
       // Cria as cartas dinamicamente
-      const numBaralhos = 3; // Número de baralhos
+      const numBaralhos = 2; // Número de baralhos
       const cartasPorBaralho = Math.ceil(numCartas / numBaralhos); // Quantidade de cartas por baralho
       const cartas = [];
-      const offsetX = 120; // Distância entre colunas
+      const offsetX = -150; // Distância entre colunas
       const offsetY = 20; // Distância entre linhas
 
       for (let i = 1; i <= numCartas; i++) {
-        const baralhoIndex = Math.floor((i - 1) / cartasPorBaralho); // Índice do baralho
-        const posInBaralho = (i - 1) % cartasPorBaralho; // Posição dentro do baralho
+          const baralhoIndex = Math.floor((i - 1) / cartasPorBaralho); // Índice do baralho
+          const posInBaralho = (i - 1) % cartasPorBaralho; // Posição dentro do baralho
 
-        // Calcula as posições
-        const left = baralhoIndex * offsetX +90 ; // Posição horizontal
-        const bottom = 200 - (posInBaralho * offsetY); // Posição vertical
+          // Calcula as posições
+          const bottom = 260 + (baralhoIndex * offsetX); // Posição horizontal
+          const left = 80 + (posInBaralho * offsetY); // Posição vertical
 
-        cartas.push({ id: i, left: left, bottom: bottom });
+          cartas.push({ id: i, left: left, bottom: bottom, msg: '', img: '', idReal: '', titulo: ''});
       }
 
       this.cartas = cartas;
