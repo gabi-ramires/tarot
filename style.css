@@ -181,21 +181,55 @@ h3 {
     justify-content: center;
 }
 
-.modal-img {
+.modal-imagem {
     max-width: 90%;
     max-height: 90%;
 }
 
 @media (max-width: 768px) {
-    .modal-img {
-        max-width: 40%;
-        max-height: 40%;
-    }
-
     .modal-content {
         display: flex;
         flex-direction: column;
     }
+
+    .modal-imagem {
+        width: 100%;
+    }
+
+    .descricao {
+        color: #ffec00
+    }
+
+    /* .imagem-carta {
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+    .imagem-carta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        filter: brightness(0.3);
+        z-index: -1;
+    }
+
+    .texto {
+        font-size: medium;
+        text-align: justify;
+        color: #ffec00;
+        text-shadow: 
+        1px 1px 1px black, 
+        -1px -1px 1px black, 
+        1px -1px 1px black, 
+        -1px 1px 1px black;
+    }
+    
 }
 
 .zoom-enter-active,
@@ -230,6 +264,4 @@ h3 {
 
 .texto {
     font-size: large;
-    font-size: large;
-
 }
