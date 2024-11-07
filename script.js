@@ -12,7 +12,6 @@ new Vue({
   },
   methods: {
     iniciar() {
-      console.log(this.categoria)
       if(this.isMobile) {
         this.criarCartasMobile(22);
       } else {
@@ -37,7 +36,7 @@ new Vue({
           const bottom = baralhoIndex * offsetX; // Posição horizontal
           const left = 0 + (posInBaralho * offsetY); // Posição vertical
 
-          cartas.push({ id: i, left: left, bottom: bottom, msg: '', img: '', idReal: '', titulo: ''});
+          cartas.push({ id: i, left: left, bottom: bottom, mensagem: '', imagem: '', idReal: '', nome: ''});
       }
 
       this.cartas = cartas;
@@ -59,7 +58,7 @@ new Vue({
           const bottom = 260 + (baralhoIndex * offsetX); // Posição horizontal
           const left = 50 + (posInBaralho * offsetY); // Posição vertical
 
-          cartas.push({ id: i, left: left, bottom: bottom, msg: '', img: '', idReal: '', titulo: ''});
+          cartas.push({ id: i, left: left, bottom: bottom, mensagem: '', imagem: '', idReal: '', nome: ''});
       }
 
       this.cartas = cartas;
@@ -76,7 +75,7 @@ new Vue({
     },
     buscarCartasServidor() {
 
-      fetch("tarot.php", {
+      fetch("TarotController.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -94,6 +93,7 @@ new Vue({
       .then(data => {
           if(data.status) {
             let cartas = data.data;
+            console.log(cartas)
 
             // Embaralhar as frases
             const cartasEmbaralhadas = this.embaralharArray(cartas.slice());
@@ -101,17 +101,18 @@ new Vue({
             // Atribui as cartas às cartas existentes
             for (let i = 0; i < this.cartas.length; i++) {
               if (i < cartasEmbaralhadas.length) {
+                console.log(cartasEmbaralhadas);
                 this.cartas[i].idReal += cartasEmbaralhadas[i].idReal;
-                this.cartas[i].titulo += cartasEmbaralhadas[i].titulo;
-                this.cartas[i].img += cartasEmbaralhadas[i].img;
-                this.cartas[i].msg += cartasEmbaralhadas[i].msg;
+                this.cartas[i].nome += cartasEmbaralhadas[i].nome;
+                this.cartas[i].imagem += cartasEmbaralhadas[i].imagem;
+                this.cartas[i].mensagem += cartasEmbaralhadas[i].mensagem;
               }
             }
 
             this.cartasOriginais = this.cartas
 
           } else {
-            console.group("erro")
+            console.error("erro")
           }
           
       })
@@ -142,8 +143,6 @@ new Vue({
       return array;
     },
     virarCarta(id) {
-      console.log(id)
-      console.log(this.categoria)
 
       if(this.categoria == ''){
         alert("Escolha uma categoria.")
@@ -162,7 +161,7 @@ new Vue({
     },
     getCartaImage(id) {
       const carta = this.cartasOriginais.find(c => c.id === id);
-      return carta ? "cartas/"+carta.img : '';
+      return carta ? "cartas/"+carta.imagem : '';
     },
     escolherCategoria(categoria = false, reset = false) {
       this.categoria = categoria;

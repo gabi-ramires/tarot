@@ -17,12 +17,17 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'  # Ajuste para a versão do PHP que você está usando
-    
-    - name: List files in current directory
-      run: ls -la
 
-    - name: Show FTP environment variables
-      run: echo "Server ${{ secrets.FTP_SERVER }}; Username ${{ secrets.FTP_USERNAME }}"
+    - name: Install Composer
+      run: |
+        curl -sS https://getcomposer.org/installer | php
+        sudo mv composer.phar /usr/local/bin/composer
+        composer --version
+
+    - name: Install PHP Dependencies
+      run: |
+        cd htdocs
+        composer install --no-dev --optimize-autoloader
 
     - name: Deploy to FTP
       uses: SamKirkland/FTP-Deploy-Action@4.2.0
