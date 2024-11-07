@@ -46,3 +46,24 @@ imagem
 
         echo json_encode($response);
     }
+
+
+    estou fazendo um aplicativo de tarot online... o usuario vai escolher uma categoria entre amor, trabalho e familia e tirar as cartas...
+
+vou te mandar a descrição da carta "O Louco" e você interpreta no sentido do amor
+
+
+
+    embaralharCartas() {
+      // Escolhe duas cartas aleatórias
+      const idx1 = Math.floor(Math.random() * this.cartas.length);
+      let idx2 = Math.floor(Math.random() * this.cartas.length);
+      while (idx2 === idx1) {
+        idx2 = Math.floor(Math.random() * this.cartas.length);
+      }
+
+      // Armazena as posições `left` das duas cartas
+      const temp = this.cartas[idx1].left;
+      this.$set(this.cartas, idx1, { ...this.cartas[idx1], left: this.cartas[idx2].left });
+      this.$set(this.cartas, idx2, { ...this.cartas[idx2], left: temp });
+    },

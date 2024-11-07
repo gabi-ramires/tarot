@@ -17,7 +17,7 @@ class Tarot {
      * @return array
      */
     public function buscarCartas()
-    {   
+    {
         $sql = "SELECT * FROM `cartas`";
         
         $res = $this->dataBase->getRows($sql);

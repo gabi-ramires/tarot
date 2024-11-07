@@ -41,7 +41,9 @@ class TarotController{
         }
     }
 
-    public function buscaCartas() {
+    public function buscaCartas($data) {
+        
+        $categoria = $data['categoria'];
 
         $data = $this->tarotModel->buscarCartas();
         $response = [
