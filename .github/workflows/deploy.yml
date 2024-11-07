@@ -26,7 +26,6 @@ jobs:
 
     - name: Install PHP Dependencies
       run: |
-        cd htdocs
         composer install --no-dev --optimize-autoloader
 
     - name: Deploy to FTP
