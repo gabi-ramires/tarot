@@ -56,17 +56,17 @@
             <transition name="zoom">
                 <div v-if="selectedCarta" class="modal" @click="closeModal()">
                     <div class="modal-content">
-                        <div class="img-carta">
-                            <img :src="getCartaImage(selectedCarta)" alt="Carta" class="modal-img" />
+                        <div class="imagem-carta">
+                            <img :src="getCartaImage(selectedCarta)" alt="Carta" class="modal-imagem" />
                         </div>
     
                         <div class="descricao">
-                            <div class="titulo">
-                                <h3>{{ cartaSelecionadaDados.titulo }}</h3>
+                            <div class="nome">
+                                <h3>{{ cartaSelecionadaDados.nome }}</h3>
                             </div>
     
                             <div class="texto">
-                                <span>{{ cartaSelecionadaDados.msg }}</span>
+                                <span>{{ cartaSelecionadaDados.mensagem }}</span>
                             </div>
                         </div>
                     </div>

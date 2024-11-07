@@ -1,0 +1,13 @@
+# Diretório de dependências do Composer
+/vendor/
+/node_modules/
+
+# Arquivos de configuração locais
+.env
+.htaccess
+
+# Anotações
+rascunho.md
+
+
+# Backup banco de dados
