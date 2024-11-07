@@ -5,20 +5,21 @@ new Vue({
     isMobile: window.innerWidth < 768,
     categoria: '',
     selectedCarta: null,
-    cartaSelecionadaDados: null
+    cartaSelecionadaDados: null,
+    cartasOriginais: ''
   },
   mounted() {
     this.iniciar();
   },
   methods: {
     iniciar() {
+      this.buscarCartasServidor();
+
       if(this.isMobile) {
         this.criarCartasMobile(22);
       } else {
         this.criarCartas(22);
       }
-      this.buscarCartasServidor();
-      
     },
     criarCartas(numCartas) {
       // Cria as cartas dinamicamente
@@ -36,7 +37,7 @@ new Vue({
           const bottom = baralhoIndex * offsetX; // Posição horizontal
           const left = 0 + (posInBaralho * offsetY); // Posição vertical
 
-          cartas.push({ id: i, left: left, bottom: bottom, mensagem: '', imagem: '', idReal: '', nome: ''});
+          cartas.push({ id: i, left: left, bottom: bottom, mensagem: '', imagem: '', idReal: '', nome: '', categoria: ''});
       }
 
       this.cartas = cartas;
@@ -58,7 +59,7 @@ new Vue({
           const bottom = 260 + (baralhoIndex * offsetX); // Posição horizontal
           const left = 50 + (posInBaralho * offsetY); // Posição vertical
 
-          cartas.push({ id: i, left: left, bottom: bottom, mensagem: '', imagem: '', idReal: '', nome: ''});
+          cartas.push({ id: i, left: left, bottom: bottom, mensagem: '', imagem: '', idReal: '', nome: '', categoria: ''});
       }
 
       this.cartas = cartas;
@@ -71,7 +72,6 @@ new Vue({
       this.iniciar();
       this.escolherCategoria(false, true);
 
-      console.log(this.carta)
     },
     buscarCartasServidor() {
 
@@ -94,22 +94,23 @@ new Vue({
           if(data.status) {
             let cartas = data.data;
             console.log(cartas)
+            //this.cartas = cartas
 
-            // Embaralhar as frases
-            const cartasEmbaralhadas = this.embaralharArray(cartas.slice());
+            // // Embaralhar as frases
+            // const cartasEmbaralhadas = this.embaralharArray(cartas.slice());
 
-            // Atribui as cartas às cartas existentes
-            for (let i = 0; i < this.cartas.length; i++) {
-              if (i < cartasEmbaralhadas.length) {
-                console.log(cartasEmbaralhadas);
-                this.cartas[i].idReal += cartasEmbaralhadas[i].idReal;
-                this.cartas[i].nome += cartasEmbaralhadas[i].nome;
-                this.cartas[i].imagem += cartasEmbaralhadas[i].imagem;
-                this.cartas[i].mensagem += cartasEmbaralhadas[i].mensagem;
-              }
-            }
+            // // Atribui as cartas às cartas existentes
+            // for (let i = 0; i < cartasEmbaralhadas.length; i++) {
+            //   if (i < cartasEmbaralhadas.length) {
+            //     this.cartas[i].idReal += cartasEmbaralhadas[i].idReal;
+            //     this.cartas[i].nome += cartasEmbaralhadas[i].nome;
+            //     this.cartas[i].imagem += cartasEmbaralhadas[i].imagem;
+            //     this.cartas[i].mensagem += cartasEmbaralhadas[i].mensagem;
+            //     this.cartas[i].categoria += cartasEmbaralhadas[i].categoria;
+            //   }
+            // }
 
-            this.cartasOriginais = this.cartas
+            this.cartasOriginais = cartas
 
           } else {
             console.error("erro")
@@ -117,22 +118,9 @@ new Vue({
           
       })
       .catch(error => {
-          alert("Erro ao processar a requisição. Por favor, tente novamente.");
+        console.log("Erro ao processar a requisição. Por favor, tente novamente.");
       });
 
-    },
-    embaralharCartas() {
-      // Escolhe duas cartas aleatórias
-      const idx1 = Math.floor(Math.random() * this.cartas.length);
-      let idx2 = Math.floor(Math.random() * this.cartas.length);
-      while (idx2 === idx1) {
-        idx2 = Math.floor(Math.random() * this.cartas.length);
-      }
-
-      // Armazena as posições `left` das duas cartas
-      const temp = this.cartas[idx1].left;
-      this.$set(this.cartas, idx1, { ...this.cartas[idx1], left: this.cartas[idx2].left });
-      this.$set(this.cartas, idx2, { ...this.cartas[idx2], left: temp });
     },
     embaralharArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
@@ -151,7 +139,6 @@ new Vue({
       this.selectedCarta = id;
       let cartaSelecionadaDados = this.cartas.filter(carta => carta.id == id);
       this.cartaSelecionadaDados = cartaSelecionadaDados[0]
-      console.log(this.cartaSelecionadaDados)
 
       // Remove a carta o baralho
       this.cartas = this.cartas.filter(carta => carta.id !== id);
@@ -159,12 +146,12 @@ new Vue({
     closeModal() {
       this.selectedCarta = null; // Fecha o modal
     },
-    getCartaImage(id) {
-      const carta = this.cartasOriginais.find(c => c.id === id);
-      return carta ? "cartas/"+carta.imagem : '';
+    getCartaImage(cartaSelecionadaDados) {
+      return "cartas/"+cartaSelecionadaDados.imagem
     },
     escolherCategoria(categoria = false, reset = false) {
       this.categoria = categoria;
+      this.atribuiCartaFront();
       let categorias = ['familia','trabalho','amor'];
 
       if(categoria) {
@@ -185,9 +172,30 @@ new Vue({
         document.getElementById('reiniciar').style.display = 'none';
       }
       
- 
-    }
+    },
+    atribuiCartaFront(){
+      let cartas = this.cartasOriginais
 
+      for (let i = cartas.length - 1; i >= 0; i--) {
+        if (cartas[i].categoria !== this.categoria) {
+          cartas.splice(i, 1); // Remove o elemento no índice atual
+        }
+      }
+
+      // Embaralhar as frases
+      const cartasEmbaralhadas = this.embaralharArray(cartas.slice());
+
+      // Atribui as cartas às cartas existentes
+      for (let i = 0; i < cartasEmbaralhadas.length; i++) {
+        if (i < cartasEmbaralhadas.length) {
+          this.cartas[i].idReal += cartasEmbaralhadas[i].idReal;
+          this.cartas[i].nome += cartasEmbaralhadas[i].nome;
+          this.cartas[i].imagem += cartasEmbaralhadas[i].imagem;
+          this.cartas[i].mensagem += cartasEmbaralhadas[i].mensagem;
+          this.cartas[i].categoria += cartasEmbaralhadas[i].categoria;
+        }
+      }
+    }
 
   }
 });

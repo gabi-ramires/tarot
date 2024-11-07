@@ -57,7 +57,7 @@
                 <div v-if="selectedCarta" class="modal" @click="closeModal()">
                     <div class="modal-content">
                         <div class="imagem-carta">
-                            <img :src="getCartaImage(selectedCarta)" alt="Carta" class="modal-imagem" />
+                            <img :src="getCartaImage(cartaSelecionadaDados)" alt="Carta" class="modal-imagem" />
                         </div>
     
                         <div class="descricao">
@@ -66,7 +66,7 @@
                             </div>
     
                             <div class="texto">
-                                <span>{{ cartaSelecionadaDados.mensagem }}</span>
+                                <p v-html="cartaSelecionadaDados.mensagem"></p>
                             </div>
                         </div>
                     </div>
