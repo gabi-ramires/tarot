@@ -72,6 +72,7 @@ new Vue({
       this.cartaSelecionadaDados = null;
       this.iniciar();
       this.escolherCategoria(false, true);
+      this.numeroCartasRestantes = '3'
 
     },
     buscarCartasServidor() {
