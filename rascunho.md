@@ -50,7 +50,7 @@ imagem
 
     estou fazendo um aplicativo de tarot online... o usuario vai escolher uma categoria entre amor, trabalho e familia e tirar as cartas...
 
-vou te mandar a descrição da carta "O Louco" e você interpreta no sentido do amor
+vou te mandar a descrição da carta "O Louco" e você interpreta no sentido do amor, trabalho e familia em no minimo 630 e maximo 650 caracteres em tag html cada texto<p>
 
 
 

@@ -6,7 +6,8 @@ new Vue({
     categoria: '',
     selectedCarta: null,
     cartaSelecionadaDados: null,
-    cartasOriginais: ''
+    cartasOriginais: '',
+    numeroCartasRestantes: '3'
   },
   mounted() {
     this.iniciar();
@@ -136,9 +137,17 @@ new Vue({
         alert("Escolha uma categoria.")
         return;
       }
+
+      if(this.numeroCartasRestantes < 1){
+        alert("Fim de jogo!");
+        return
+      }
       this.selectedCarta = id;
       let cartaSelecionadaDados = this.cartas.filter(carta => carta.id == id);
       this.cartaSelecionadaDados = cartaSelecionadaDados[0]
+
+      // Atualiza numero de cartas restantes
+      this.numeroCartasRestantes -= 1
 
       // Remove a carta o baralho
       this.cartas = this.cartas.filter(carta => carta.id !== id);
