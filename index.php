@@ -25,8 +25,8 @@
                     :class="['btn-opcao', { 'btn-opcao-active': categoria === 'trabalho' }]">
                     Trabalho 💼
                 </button>
-                <button 
-                id="amor"
+                <button
+                    id="amor"
                     @click="escolherCategoria('amor')" 
                     :class="['btn-opcao', { 'btn-opcao-active': categoria === 'amor' }]">
                     Amor 💕
@@ -38,7 +38,7 @@
             <br>
         </div>
 
-        <div class="cartas">
+        <div class="cartas" >
             <transition-group name="fade" mode="out-in">
                 <div
                     v-for="(carta) in cartas"
@@ -76,10 +76,11 @@
 
         </div>
 
+        <img v-if="qrCodeSrc" :src="qrCodeSrc" alt="QR Code" style="z-index: 2; width: 250px"/>
+
     </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="vue.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
