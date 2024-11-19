@@ -56,7 +56,7 @@ class Pagamento {
                 },
                 "description": "'.$nomePlano.'",
                 "external_reference": "tarot",
-                "notification_url": "https://tarot.free.nf/pagamento.php"
+                "notification_url": "https://cartas.free.nf/pagamento.php"
               }',
           CURLOPT_HTTPHEADER => array(
             'Authorization: Bearer APP_USR-6943513644521036-030709-a192b307d562388941969106bca3e8be-247133647',
