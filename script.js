@@ -156,7 +156,7 @@ new Vue({
 
       if(categoria) {
         if(categoria == 'amor') {
-          this.gerarQrCodePix();
+          //this.gerarQrCodePix();
         }
         categorias.forEach(cat => {
           if(cat != categoria) {
